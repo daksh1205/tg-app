@@ -16,13 +16,11 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
   void initState() {
     super.initState();
     _loadItems();
-
     _scrollController.addListener(_scrollListener);
   }
 
   void _scrollListener() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
+    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
       _loadItems();
     }
   }
@@ -41,6 +39,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        toolbarHeight: 70,
         backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
@@ -64,22 +63,36 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
           itemBuilder: (context, index) {
             if (index < _controller.items.length) {
               final Item item = _controller.items[index];
-              return ListTile(
-                title: Text(
-                  item.title,
-                  style: GoogleFonts.sora(
-                    color: Colors.white,
-                    fontSize: 14,
+              return Card(
+                color: Color.fromARGB(255, 38, 37, 37),
+                elevation: 4,
+                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                child: ListTile(
+                  title: Text(
+                    item.title,
+                    style: GoogleFonts.sora(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    item.description,
+                    style: GoogleFonts.sora(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                  ),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.network(
+                      item.imageUrl,
+
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-                subtitle: Text(
-                  item.description,
-                  style: GoogleFonts.sora(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                ),
-                leading: Image.network(item.imageUrl),
               );
             } else {
               return const Padding(
